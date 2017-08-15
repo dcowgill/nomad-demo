@@ -1,0 +1,24 @@
+---
+
+- name: download archive
+  get_url:
+    url: https://releases.hashicorp.com/consul/0.9.2/consul_0.9.2_linux_amd64.zip
+    dest: /root/consul.zip
+    force: no
+    checksum: sha256:0a2921fc7ca7e4702ef659996476310879e50aeeecb5a205adfdbe7bd8524013
+  become: true
+
+- name: unarchive executable
+  unarchive:
+    src: /root/consul.zip
+    dest: /usr/bin
+    remote_src: true
+  become: true
+
+- name: create consul user
+  user: name=consul
+  become: true
+
+- name: create data directory
+  file: path=/var/lib/consul state=directory owner=consul
+  become: true

@@ -1,0 +1,8 @@
+---
+
+automation_user: "vagrant"
+consul_encrypt_key: "BKXEufCLVMJwdnnmZLr/rw=="
+datacenter: "vagrant-dc1"
+nomad_encrypt_key: "sZ1nu/kkhlPwBsUTBJta7Q=="
+private_domain: "example.com"
+vagrant: true

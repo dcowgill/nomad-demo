@@ -1,0 +1,42 @@
+# {{ansible_managed}}
+
+job "demo-server" {
+  datacenters = ["{{datacenter}}"]
+  type = "service"
+  update {
+    max_parallel = 2
+    min_healthy_time = "5s"
+    healthy_deadline = "30s"
+  }
+  group "main" {
+    count = 3
+    constraint {
+      distinct_hosts = true
+    }
+    task "main" {
+      driver = "exec"
+      config {
+        command = "/bin/demo_server.{{version}}"
+        args = ["-port-env", "NOMAD_PORT_http"]
+      }
+      resources {
+        network {
+          port "http" {} # dynamic port
+        }
+      }
+      service {
+        port = "http"
+        check {
+          type = "http"
+          path = "/info"
+          interval = "5s"
+          timeout = "5s"
+        }
+      }
+    }
+  }
+}
+
+# Local Variables:
+# mode: hcl
+# End:

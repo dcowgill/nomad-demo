@@ -1,0 +1,24 @@
+---
+
+- name: create configuration directories
+  file: path=/etc/consul.d/client state=directory
+  become: true
+
+- name: install configuration files
+  template:
+    src: config.json.j2
+    dest: /etc/consul.d/client/config.json
+    backup: true
+  become: true
+  notify: restart consul
+
+- name: validate configuration
+  command: /usr/bin/consul validate /etc/consul.d/client
+
+- name: install systemd config
+  template:
+    src: systemd_service.j2
+    dest: /etc/systemd/system/consul.service
+    backup: true
+  become: true
+  notify: restart consul

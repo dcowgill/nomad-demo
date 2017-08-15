@@ -1,0 +1,20 @@
+---
+
+- hosts: cloud_nodes
+  roles: [bootstrap, common]
+
+- hosts: consul_servers
+  tags: [consul, consul_server]
+  roles: [consul_server]
+
+- hosts: consul_clients
+  tags: [consul, consul_server]
+  roles: [consul_client]
+
+- hosts: nomad_servers
+  tags: [nomad, nomad_server]
+  roles: [nomad_server]
+
+- hosts: nomad_clients
+  tags: [nomad, nomad_client]
+  roles: [nomad_client]

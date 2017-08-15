@@ -1,0 +1,26 @@
+---
+
+- name: download go package
+  get_url:
+    url: "{{go_package_url}}"
+    dest: "/root/{{go_package_filename}}"
+    force: no
+    checksum: "sha256:{{go_package_sha256sum}}"
+  become: true
+
+- name: remove existing go installation
+  file: path=/usr/local/go state=absent
+  become: true
+
+- name: create install directory for go
+  file:
+    path: /usr/local/go
+    state: directory
+    owner: "{{automation_user}}"
+    group: "{{automation_user}}"
+    mode: 0755
+  become: true
+
+- name: unarchive go package
+  unarchive: src=/root/{{go_package_filename}} copy=no dest=/usr/local
+  become: true

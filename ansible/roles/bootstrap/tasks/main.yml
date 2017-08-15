@@ -1,0 +1,15 @@
+---
+
+- name: set hostname
+  hostname: name="{{fqdn}}"
+  become: true
+  changed_when: false
+
+- name: configure sudo
+  template: src=sudoers.j2 dest=/etc/sudoers validate="visudo -csf %s" mode=400
+  become: true
+
+- name: configure sshd
+  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config backup=true
+  become: true
+  notify: restart sshd

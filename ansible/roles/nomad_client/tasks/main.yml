@@ -1,0 +1,32 @@
+---
+
+- name: create data directory
+  file: path=/var/lib/nomad/client state=directory
+  become: true
+
+- name: create configuration directory
+  file: path=/etc/nomad.d/client state=directory
+  become: true
+
+- name: install configuration file
+  template:
+    src: config.hcl.j2
+    dest: /etc/nomad.d/client/config.hcl
+    backup: true
+  become: true
+  notify: restart nomad client
+
+- name: install systemd config
+  template:
+    src: systemd_service.j2
+    dest: /etc/systemd/system/nomad_client.service
+    backup: true
+  become: true
+  notify: restart nomad client
+
+- name: set NOMAD_ADDR for interactive shells
+  template:
+    src: nomad.sh.j2
+    dest: /etc/profile.d/nomad.sh
+    mode: 0755
+  become: true

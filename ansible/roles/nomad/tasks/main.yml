@@ -1,0 +1,22 @@
+---
+
+- name: download archive
+  get_url:
+    url: https://releases.hashicorp.com/nomad/0.6.0/nomad_0.6.0_linux_amd64.zip
+    dest: /root/nomad.zip
+    force: no
+    checksum: sha256:fcf108046164cfeda84eab1c3047e36ad59d239b66e6b2f013e6c93064bc6313
+  become: true
+
+- name: unarchive executable
+  unarchive:
+    src: /root/nomad.zip
+    dest: /usr/bin
+    remote_src: true
+  become: true
+
+
+- name: setup chroot directories
+  file: path=/usr/local/nomad-demo/{{item}} state=directory
+  become: true
+  with_items: [bin, etc, job]

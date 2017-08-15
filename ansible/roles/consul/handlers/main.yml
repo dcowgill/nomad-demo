@@ -1,0 +1,8 @@
+
+- name: restart consul
+  systemd:
+    name: consul
+    daemon_reload: true
+    state: restarted
+    enabled: true
+  become: true

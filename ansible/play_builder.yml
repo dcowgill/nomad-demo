@@ -1,0 +1,9 @@
+---
+
+- hosts: ci_nodes
+  roles:
+    - bootstrap
+    - common
+    - builder
+    - ansible
+    - go

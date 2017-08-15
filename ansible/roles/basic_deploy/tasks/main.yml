@@ -1,0 +1,15 @@
+---
+
+- name: copy executable
+  copy:
+    src: "{{executable_path}}"
+    dest: "/usr/local/nomad-demo/bin/{{program}}.{{version}}"
+    mode: 0755
+  become: true
+
+- name: create nomad job description
+  template:
+    src: "{{job}}.nomad.j2"
+    dest: "/usr/local/nomad-demo/job/{{job}}.{{version}}.nomad"
+    validate: /usr/bin/nomad validate %s
+  become: true

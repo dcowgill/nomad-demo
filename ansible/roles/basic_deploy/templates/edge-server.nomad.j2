@@ -1,0 +1,47 @@
+# {{ansible_managed}}
+
+job "edge-server" {
+  datacenters = ["{{datacenter}}"]
+  type = "service"
+  update {
+    max_parallel = 2
+    min_healthy_time = "5s"
+    healthy_deadline = "30s"
+  }
+  group "main" {
+    count = 4
+    constraint {
+      distinct_hosts = true
+    }
+    task "main" {
+      driver = "exec"
+      config {
+        command = "/bin/edge_server.{{version}}"
+        args = [
+          "-address", "0.0.0.0:25000",
+          "-service", "demo-server-main-main",
+        ]
+      }
+      resources {
+        network {
+          port "http" {
+            static = "25000"
+          }
+        }
+      }
+      service {
+        port = "http"
+        check {
+          type = "http"
+          path = "/info"
+          interval = "5s"
+          timeout = "30s"
+        }
+      }
+    }
+  }
+}
+
+# Local Variables:
+# mode: hcl
+# End:

@@ -1,0 +1,9 @@
+---
+
+- include: setup_ssh.yml user=vagrant
+  when: vagrant
+
+- name: install development packages
+  apt: pkg={{item}}
+  with_items:
+    - make

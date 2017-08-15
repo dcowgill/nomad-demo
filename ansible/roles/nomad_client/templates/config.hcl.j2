@@ -1,0 +1,25 @@
+# {{ansible_managed}}
+
+bind_addr = "{{ansible_ssh_host}}"
+client {
+  chroot_env {
+    "/usr/local/nomad-demo/bin" = "/bin"
+    "/usr/local/nomad-demo/etc" = "/etc"
+    "/lib" = "/lib"
+    "/lib64" = "/lib64"
+}
+  enabled = true
+}
+data_dir  = "/var/lib/nomad/client"
+datacenter = "{{datacenter}}"
+log_level = "DEBUG"
+ports {
+  http = 4746
+}
+server {
+  enabled = false
+}
+
+# Local Variables:
+# mode: hcl
+# End:

@@ -1,0 +1,15 @@
+# {{ansible_managed}}
+
+# Note: requiretty is incompatible with Ansible pipelining, as well as
+# the "synchronize" module. Do not enable.
+Defaults !requiretty
+Defaults !visiblepw
+Defaults env_reset
+Defaults mail_badpass
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+root    ALL=(ALL:ALL) ALL
+%admin  ALL=(ALL) ALL
+%sudo   ALL=(ALL:ALL) NOPASSWD: ALL
+
+#includedir /etc/sudoers.d

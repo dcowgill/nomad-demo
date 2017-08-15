@@ -1,0 +1,14 @@
+# {{ansible_managed}}
+
+[Unit]
+Description=nomad client agent
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d/client
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

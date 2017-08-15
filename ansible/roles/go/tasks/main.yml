@@ -1,0 +1,29 @@
+---
+
+- name: determine version of existing go installation
+  shell: cat /usr/local/go/VERSION
+  register: version_contents
+  changed_when: false
+  failed_when: false
+
+- include: install_go.yml
+  when: version_contents.stdout != go_version
+
+# These directories must be owned by the automation user, or "go build"
+# will fail with permission errors.
+- name: create gopath pkg/src directories
+  file:
+    path: "{{gopath}}/{{item}}"
+    state: directory
+    owner: "{{automation_user}}"
+    group: "{{automation_user}}"
+    mode: 0755
+  with_items: [pkg, src]
+  become: true
+
+- name: setup GOPATH and PATH for interactive shells
+  template:
+    src: gopath.sh.j2
+    dest: /etc/profile.d/gopath.sh
+    mode: 0755
+  become: true

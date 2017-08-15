@@ -1,0 +1,6 @@
+---
+
+- hosts: nomad_servers
+  tasks:
+    - name: send SIGKILL to nomad server process
+      shell: ps auxw | awk '/nomad.*server/ && ! /awk/ {print $2}' | xargs sudo kill -9

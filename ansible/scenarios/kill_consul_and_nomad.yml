@@ -1,0 +1,6 @@
+---
+
+- hosts: consul_servers:consul_clients:nomad_servers:nomad_clients
+  tasks:
+    - name: send SIGKILL to ALL consul and nomad processes
+      shell: ps auxw | awk '/consul|nomad/ && ! /awk/ {print $2}' | xargs sudo kill -9

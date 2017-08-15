@@ -1,0 +1,16 @@
+{
+    "bind_addr": "{{ansible_ssh_host}}",
+    "data_dir": "/var/lib/consul",
+    "datacenter": "{{datacenter}}",
+    "encrypt": "{{consul_encrypt_key}}",
+    "leave_on_terminate": true,
+    "log_level": "DEBUG",
+    "retry_join": [
+{%- set comma = joiner(", ") %}
+{% for host in groups.consul_servers|sort -%}
+  {{ comma() }}"{{hostvars[host].ansible_ssh_host}}"
+{%- endfor -%}
+    ],
+    "server": false,
+    "ui": false
+}

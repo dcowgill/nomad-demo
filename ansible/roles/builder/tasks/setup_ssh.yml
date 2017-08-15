@@ -1,0 +1,11 @@
+---
+
+- name: configure ssh for {{user}}
+  template: src=ssh.cfg.j2 dest=/home/{{user}}/.ssh/config mode=0600
+  become: true
+  become_user: "{{user}}"
+
+- name: install private ssh key for {{user}}
+  copy: src=files/keys/{{user}} dest=/home/{{user}}/.ssh/id_rsa mode=0600
+  become: true
+  become_user: "{{user}}"

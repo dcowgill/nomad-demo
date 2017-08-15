@@ -1,0 +1,35 @@
+---
+
+- name: update apt cache
+  apt: update_cache=true cache_valid_time=43200
+  become: true
+
+- name: install commonly used packages
+  apt: pkg={{item}}
+  with_items:
+    - htop
+    - iptables
+    - iptables-persistent
+    - ntp
+    - sysstat
+    - unzip
+  become: true
+
+- name: enable ntp service
+  service: name=ntp state=started enabled=true
+  become: true
+
+# - name: setup iptables rules
+#   template: >
+#     src=rules.v{{item}}.j2
+#     dest=/etc/iptables/rules.v{{item}}
+#     owner=root
+#     mode=0600
+#   with_items: [4, 6]
+#   become: true
+#   notify:
+#     - restart iptables
+
+# - name: enable iptables-persistent service
+#   service: name=iptables-persistent state=started enabled=true
+#   become: true

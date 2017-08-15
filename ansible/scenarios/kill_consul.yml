@@ -1,0 +1,6 @@
+---
+
+- hosts: consul_servers:consul_clients
+  tasks:
+    - name: send SIGKILL to all consul processes
+      shell: ps auxw | awk '/consul/ && ! /awk/ {print $2}' | xargs sudo kill -9

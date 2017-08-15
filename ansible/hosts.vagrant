@@ -1,0 +1,42 @@
+[vagrant]
+builder ansible_connection=local ansible_ssh_host=127.0.0.1
+node01 ansible_ssh_host=172.16.206.21
+node02 ansible_ssh_host=172.16.206.22
+node03 ansible_ssh_host=172.16.206.23
+node04 ansible_ssh_host=172.16.206.24
+
+[ci_nodes]
+builder
+
+[cloud_nodes]
+node01
+node02
+node03
+node04
+
+[consul_servers]
+node01
+node02
+node03
+
+# Consul servers also act as clients, so there is no need to run clients
+# on machines in the consul_servers group.
+[consul_clients]
+node04
+
+[nomad_servers]
+node01
+node02
+node03
+
+# In a production environment nomad clients should not be run on the
+# same machines as nomad servers.
+[nomad_clients]
+node01
+node02
+node03
+node04
+
+# Local Variables:
+# mode: conf-space
+# End:

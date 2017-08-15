@@ -1,0 +1,24 @@
+# {{ansible_managed}}
+
+bind_addr = "{{ansible_ssh_host}}"
+client {
+  enabled = false
+}
+data_dir  = "/var/lib/nomad/server"
+datacenter = "{{datacenter}}"
+log_level = "DEBUG"
+ports {
+  http = 4646
+  rpc  = 4647
+  serf = 4648
+}
+server {
+  enabled = true
+  encrypt = "{{nomad_encrypt_key}}"
+  bootstrap_expect = 3
+  rejoin_after_leave = true
+}
+
+# Local Variables:
+# mode: hcl
+# End:

@@ -1,0 +1,37 @@
+# {{ansible_managed}}
+
+# Note: do not change anything in this file without carefully
+# considering the security implications!
+
+AllowAgentForwarding yes
+ChallengeResponseAuthentication no
+GSSAPIAuthentication no
+HostbasedAuthentication no
+IgnoreRhosts yes
+MaxStartups 100
+PasswordAuthentication no
+PermitEmptyPasswords no
+PermitRootLogin no
+PermitUserEnvironment no
+Port 22
+PrintLastLog yes
+PrintMotd no
+Protocol 2
+PubkeyAuthentication yes
+StrictModes yes
+SyslogFacility AUTHPRIV
+TCPKeepAlive yes
+UseDNS no
+UseLogin no
+UsePAM yes
+UsePrivilegeSeparation yes
+X11Forwarding no
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# Local Variables:
+# mode: conf-space
+# End:

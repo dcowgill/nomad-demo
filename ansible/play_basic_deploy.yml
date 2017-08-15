@@ -1,0 +1,31 @@
+---
+
+# Required variables:
+#
+#       job: name of the nomad job
+#       program: name of the Go executable
+#
+
+- hosts: localhost
+  tasks:
+    - name: compute deployment version
+      shell: shasum -a256 {{playbook_dir}}/../go/bin/{{program}} | awk '{print substr($0, 0, 7)}'
+      register: shasum_result
+
+- hosts: nomad_clients,nomad_servers[0]
+  tasks:
+    - set_fact: version={{hostvars.localhost.shasum_result.stdout}}
+
+- hosts: nomad_clients
+  gather_facts: no
+  roles:
+    - role: basic_deploy
+      executable_path: "{{playbook_dir}}/../go/bin/{{program}}"
+      job: "{{job}}"
+      program: "{{program}}"
+
+- hosts: nomad_servers[0]
+  gather_facts: no
+  roles:
+    - role: nomad_run_job
+      job: "{{job}}"

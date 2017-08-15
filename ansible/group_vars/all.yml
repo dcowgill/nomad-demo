@@ -1,0 +1,11 @@
+---
+
+fqdn: "{{inventory_hostname}}.{{datacenter}}.{{private_domain}}"
+gopath: "/gopath"
+vagrant: false
+
+# automation_user: ""
+# consul_encrypt_key: ""
+# datacenter: ""
+# nomad_encrypt_key: ""
+# private_domain: ""

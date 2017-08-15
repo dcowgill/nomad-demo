@@ -1,0 +1,8 @@
+
+- name: restart nomad client
+  systemd:
+    name: nomad_client
+    daemon_reload: true
+    state: restarted
+    enabled: true
+  become: true
