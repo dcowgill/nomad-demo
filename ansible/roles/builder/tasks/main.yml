@@ -7,3 +7,4 @@
   apt: pkg={{item}}
   with_items:
     - make
+  become: true
