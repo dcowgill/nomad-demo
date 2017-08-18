@@ -55,7 +55,7 @@ func main() {
 			if err := uc.refresh(); err != nil {
 				log.Printf("warning: error while refreshing upstreams: %s", err)
 			}
-			time.Sleep(10 * time.Second)
+			time.Sleep(2 * time.Second)
 		}
 	}()
 
