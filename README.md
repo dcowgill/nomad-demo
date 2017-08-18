@@ -12,11 +12,14 @@ On the builder VM:
     ansible-playbook -i /vagrant/ansible/hosts.vagrant /vagrant/ansible/play_builder.yml
     ansible-playbook -i /vagrant/ansible/hosts.vagrant /vagrant/ansible/play_world.yml
 
-To view the Consul web UI (run these commands on the host machine):
+To make sure Consul and Nomad are healthy, visit the web UI by
+forwarding a port on your host machine:
 
     ssh -N -L 8888:127.0.0.1:8500 -l vagrant -i ~/.vagrant.d/insecure_private_key 172.16.206.21 &
-    curl http://localhost:8888/ui/
     
+Then visit [http://localhost:8888/ui/](http://localhost:8888/ui/). There
+should be 3 consul, 18 nomad, and 3 nomad-client services passing.
+
 Deploy the "edge_server" program (on the builder VM):
 
     make -C /vagrant/go/src/nomad && \
@@ -81,6 +84,11 @@ the job spec would work sometimes, but not when the spec's base template
 is the same and the only change is in its variables.
 
 **System doesn't recover if all consul and nomad servers are killed simultaneously.**
+
+After a complete restart of clusters, consul will not register some
+services even though the processes are running. Stopping and and
+re-running the relevant nomad job restores the system back to a good
+state but unfortunately requires downtime.
 
 `¯\_(ツ)_/¯`
 
