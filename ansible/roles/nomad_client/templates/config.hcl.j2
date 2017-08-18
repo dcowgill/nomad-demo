@@ -3,8 +3,7 @@
 bind_addr = "{{ansible_ssh_host}}"
 client {
   chroot_env {
-    "/usr/local/nomad-demo/bin" = "/bin"
-    "/usr/local/nomad-demo/etc" = "/etc"
+    "/usr/local/nomad-demo" = "/nomad-demo"
     "/lib" = "/lib"
     "/lib64" = "/lib64"
 }

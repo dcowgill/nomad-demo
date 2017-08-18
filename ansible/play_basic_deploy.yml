@@ -6,15 +6,10 @@
 #       program: name of the Go executable
 #
 
-- hosts: localhost
-  tasks:
-    - name: compute deployment version
-      shell: shasum -a256 {{playbook_dir}}/../go/bin/{{program}} | awk '{print substr($0, 0, 7)}'
-      register: shasum_result
-
 - hosts: nomad_clients,nomad_servers[0]
   tasks:
-    - set_fact: version={{hostvars.localhost.shasum_result.stdout}}
+    - set_fact: timestamp={{ansible_date_time.iso8601}}
+    - set_fact: deploy_dir=/usr/local/nomad-demo/{{job}}/{{timestamp}}
 
 - hosts: nomad_clients
   gather_facts: no

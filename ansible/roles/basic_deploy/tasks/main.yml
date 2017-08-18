@@ -1,15 +1,21 @@
 ---
 
+- name: create deployment directory
+  file:
+    path: "{{deploy_dir}}"
+    state: directory
+  become: true
+
 - name: copy executable
   copy:
     src: "{{executable_path}}"
-    dest: "/usr/local/nomad-demo/bin/{{program}}.{{version}}"
+    dest: "{{deploy_dir}}/{{program}}"
     mode: 0755
   become: true
 
 - name: create nomad job description
   template:
     src: "{{job}}.nomad.j2"
-    dest: "/usr/local/nomad-demo/job/{{job}}.{{version}}.nomad"
+    dest: "{{deploy_dir}}/job.nomad"
     validate: /usr/bin/nomad validate %s
   become: true

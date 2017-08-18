@@ -75,14 +75,6 @@ Current workaround for problem #2 is to ignore the service address
 reported by Consul and use the node address instead. Not sure yet how to
 deal with problem #1.
 
-**Deployment fails if program version hasn't changed.**
-
-Right now the deployment version is based only on a hash of the
-executable file, but deploying just a modified job spec is a valid use
-case. Computing the version based on the concatenation of the binary and
-the job spec would work sometimes, but not when the spec's base template
-is the same and the only change is in its variables.
-
 **System doesn't recover if all consul and nomad servers are killed simultaneously.**
 
 After a complete restart of clusters, consul will not register some

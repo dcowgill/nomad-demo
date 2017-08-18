@@ -15,8 +15,6 @@
     remote_src: true
   become: true
 
-
-- name: setup chroot directories
-  file: path=/usr/local/nomad-demo/{{item}} state=directory
+- name: create chroot base dir
+  file: path=/usr/local/nomad-demo state=directory
   become: true
-  with_items: [bin, etc, job]

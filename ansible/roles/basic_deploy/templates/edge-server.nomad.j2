@@ -16,7 +16,7 @@ job "edge-server" {
     task "main" {
       driver = "exec"
       config {
-        command = "/bin/edge_server.{{version}}"
+        command = "/nomad-demo/edge-server/{{timestamp}}/edge_server"
         args = [
           "-address", "0.0.0.0:25000",
           "-service", "demo-server-main-main",

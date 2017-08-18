@@ -16,7 +16,7 @@ job "demo-server" {
     task "main" {
       driver = "exec"
       config {
-        command = "/bin/demo_server.{{version}}"
+        command = "/nomad-demo/demo-server/{{timestamp}}/demo_server"
         args = ["-port-env", "NOMAD_PORT_http"]
       }
       resources {
