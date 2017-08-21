@@ -1,9 +1,9 @@
 ---
 
 - name: plan nomad job
-  shell: /usr/local/bin/nomad plan {{deploy_dir}}/job.nomad
+  shell: /usr/local/bin/nomad plan {{deploy_dir}}/job.hcl
   register: plan_result
   failed_when: plan_result.rc != 0 and plan_result.rc != 1
 
 - name: run nomad job
-  shell: /usr/local/bin/nomad run {{deploy_dir}}/job.nomad
+  shell: /usr/local/bin/nomad run {{deploy_dir}}/job.hcl

@@ -6,15 +6,19 @@
 #       program: name of the Go executable
 #
 
-- hosts: nomad_clients,nomad_servers[0]
+- hosts: localhost
   tasks:
     - set_fact: timestamp={{ansible_date_time.iso8601}}
+
+- hosts: nomad_clients,nomad_servers[0]
+  tasks:
+    - set_fact: timestamp={{hostvars.localhost.timestamp}}
     - set_fact: deploy_dir=/usr/local/nomad-demo/{{job}}/{{timestamp}}
 
 - hosts: nomad_clients
   gather_facts: no
   roles:
-    - role: basic_deploy
+    - role: deploy_single_exec
       executable_path: "{{playbook_dir}}/../go/bin/{{program}}"
       job: "{{job}}"
       program: "{{program}}"

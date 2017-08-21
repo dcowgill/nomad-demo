@@ -15,7 +15,7 @@
 
 - name: create nomad job description
   template:
-    src: "{{job}}.nomad.j2"
-    dest: "{{deploy_dir}}/job.nomad"
+    src: "{{job}}.hcl.j2"
+    dest: "{{deploy_dir}}/job.hcl"
     validate: /usr/bin/nomad validate %s
   become: true
